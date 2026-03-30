@@ -37,7 +37,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         try {
             String jwt = parseJwt(request);
-
+            
             if (jwt != null) {
                 String email = jwtUtil.extractEmail(jwt);
 

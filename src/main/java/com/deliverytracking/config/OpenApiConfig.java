@@ -25,7 +25,7 @@ import org.springframework.web.client.RestTemplate;
                 )
         ),
         servers = {
-                @Server(url = "http://localhost:8080", description = "Local Development Server")
+                @Server(url = "/", description = "Local Development Server")
         }
 )
 @SecurityScheme(

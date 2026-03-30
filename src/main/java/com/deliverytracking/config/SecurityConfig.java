@@ -87,7 +87,11 @@ public class SecurityConfig {
                     .accessDeniedHandler(accessDeniedHandlerJwt)
                 )
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers( "/api/auth/**",
+                        "/api/login",
+                        "/api/register",
+                        "/error",
+                        "/favicon.ico").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/track/**").permitAll()
                 .requestMatchers(
                     "/swagger-ui/**",
@@ -116,5 +120,6 @@ public class SecurityConfig {
 
         return http.build();
     }
+    
 }
 
