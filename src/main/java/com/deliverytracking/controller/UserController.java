@@ -52,7 +52,7 @@ public class UserController {
  // ADD these two methods inside the class:
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','HUB_MANAGER')")
     @Operation(summary = "Delete a user")
     public ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
