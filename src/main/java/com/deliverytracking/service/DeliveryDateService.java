@@ -233,6 +233,11 @@ public class DeliveryDateService {
          }
 
          // Total window from creation to expected delivery
+         if (shipment.getCreatedAt() == null || expectedDate == null) {
+    log.warn("Skipping delay check for {} — missing createdAt or expectedDate", 
+        shipment.getTrackingId());
+    return;
+}
          long totalExpectedHours = java.time.Duration.between(
              shipment.getCreatedAt(), expectedDate).toHours();
 
@@ -324,7 +329,16 @@ public class DeliveryDateService {
         LocalDateTime currentExpected = shipment.getRevisedDeliveryDate() != null
             ? shipment.getRevisedDeliveryDate()
             : shipment.getExpectedDeliveryDate();
-
+        if (currentExpected == null) {
+    currentExpected = deliveryDateService.calculateExpectedDeliveryDate(
+        shipment.getOriginLat(),    shipment.getOriginLng(),
+        shipment.getDestinationLat(), shipment.getDestinationLng(),
+        shipmentRouteRepository.countByShipmentId(shipment.getId())
+    );
+    shipment.setExpectedDeliveryDate(currentExpected);
+    shipmentRepository.save(shipment);
+    log.info("Backfilled expectedDeliveryDate for {} during delay report", trackingId);
+}
         LocalDateTime newRevisedDate = currentExpected.plusHours(additionalHours);
 
         shipment.setDelayed(true);
