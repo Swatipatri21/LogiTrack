@@ -5,6 +5,7 @@ import com.deliverytracking.entity.Hub;
 import com.deliverytracking.entity.User;
 import com.deliverytracking.enums.Role;
 import com.deliverytracking.exception.ResourceNotFoundException;
+import com.deliverytracking.repository.DeliveryStatusUpdateRepository;
 import com.deliverytracking.repository.HubRepository;
 import com.deliverytracking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final HubRepository  hubRepository;
+    private final DeliveryStatusUpdateRepository deliveryStatusUpdateRepository;
 
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll()
@@ -52,18 +54,10 @@ public class UserService {
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("User not found: " + id));
+        deliveryStatusUpdateRepository.nullifyUpdatedBy(id);
         userRepository.delete(user);
     }
-    
-//    @Transactional
-//    public UserResponse updateUser(Long id, String name, String email, String phone) {
-//        User user = userRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + id));
-//        if (name != null && !name.isBlank()) user.setName(name);
-//        if (email != null && !email.isBlank()) user.setEmail(email);
-//        userRepository.save(user);
-//        return mapToResponse(user);
-//    }
+
     
     @Transactional
     public UserResponse updateUser(Long id, String name, String email, String phone) {
