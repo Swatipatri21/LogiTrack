@@ -108,8 +108,8 @@ public class SecurityConfig {
 //                .requestMatchers("/api/history/**").hasRole("ADMIN")
                 .requestMatchers("/api/history/**").hasAnyRole("ADMIN", "HUB_MANAGER")
                 .requestMatchers(HttpMethod.GET,    "/api/users/**").authenticated()  // ← was ADMIN only
-                .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT,    "/api/users/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasanyRole("ADMIN","HUB_MANAGER")
+                .requestMatchers(HttpMethod.PUT,    "/api/users/**").hasanyRole("ADMIN","HUB_MANAGER")
                 .requestMatchers(HttpMethod.PATCH,  "/api/users/**").authenticated()  // @PreAuthorize handles it
                 .anyRequest().authenticated()
             )
