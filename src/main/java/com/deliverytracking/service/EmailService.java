@@ -204,7 +204,7 @@ public class EmailService {
                 java.time.LocalDateTime.now().toString(),
                 user.getRole().name()
         );
-//        sendEmail(user.getEmail(), subject, body);
+   sendEmail(user.getEmail(), subject, body);
     }
     
  // ── TASK ASSIGNED EMAIL ───────────────────────────────────
@@ -356,7 +356,7 @@ public class EmailService {
                         ? deadline.toString() : "ASAP"
         );
 
-//        sendEmail(staff.getEmail(), subject, body);
+       sendEmail(staff.getEmail(), subject, body);
     }
 
     // ── REASSIGNMENT ALERT TO ADMIN ───────────────────────────
@@ -1075,16 +1075,16 @@ public class EmailService {
                 getExtraMessageForStatus(newStatus),
                 shipment.getTrackingId()
         );
-//        sendEmail(shipment.getCreatedBy().getEmail(),
-//                subject, body);
-//        sendEmail(shipment.getCreatedBy().getEmail(), subject, body);
-//
-//        if (shipment.getReceiverEmail() != null &&
-//                !shipment.getReceiverEmail().isBlank()) {
-//            sendEmail(shipment.getReceiverEmail(), subject, body);
-//            logger.info("✅ Status email also sent to receiver: {}",
-//                    shipment.getReceiverEmail());
-//        }
+       sendEmail(shipment.getCreatedBy().getEmail(),
+               subject, body);
+       sendEmail(shipment.getCreatedBy().getEmail(), subject, body);
+
+       if (shipment.getReceiverEmail() != null &&
+               !shipment.getReceiverEmail().isBlank()) {
+           sendEmail(shipment.getReceiverEmail(), subject, body);
+           logger.info("✅ Status email also sent to receiver: {}",
+                   shipment.getReceiverEmail());
+       }
     }
 
     // ── 5. DELAY NOTIFICATION EMAIL ───────────────────────────
@@ -1204,8 +1204,8 @@ public class EmailService {
                 shipment.getOrigin(),
                 shipment.getDestination()
         );
-//        sendEmail(shipment.getCreatedBy().getEmail(),
-//                subject, body);
+       sendEmail(shipment.getCreatedBy().getEmail(),
+               subject, body);
     }
 
     // ── 6. SHIPMENT DELETED EMAIL ─────────────────────────────
@@ -1286,7 +1286,7 @@ public class EmailService {
                 shipment.getDestination(),
                 java.time.LocalDateTime.now().toString()
         );
-//        sendEmail(adminEmail, subject, body);
+       sendEmail(adminEmail, subject, body);
     }
 
     // ── HELPER METHODS ────────────────────────────────────────
@@ -1405,7 +1405,7 @@ public class EmailService {
             </div>
             """.formatted(trackingId, otp, phone);
 
-//        sendEmail(email, subject, body);
+       sendEmail(email, subject, body);
     }
 
     // ── 7. FINAL DELIVERED CONFIRMATION ───────────────────────
@@ -1458,6 +1458,6 @@ public class EmailService {
             </div>
             """.formatted(shipment.getTrackingId(), shipment.getDeliveredAt());
 
-//        sendEmail(shipment.getReceiverEmail(), subject, body);
+       sendEmail(shipment.getReceiverEmail(), subject, body);
     }
 }
