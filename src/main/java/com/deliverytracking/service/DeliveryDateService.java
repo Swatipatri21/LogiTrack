@@ -330,11 +330,11 @@ public class DeliveryDateService {
             ? shipment.getRevisedDeliveryDate()
             : shipment.getExpectedDeliveryDate();
         if (currentExpected == null) {
-    currentExpected = deliveryDateService.calculateExpectedDeliveryDate(
-        shipment.getOriginLat(),    shipment.getOriginLng(),
-        shipment.getDestinationLat(), shipment.getDestinationLng(),
-        shipmentRouteRepository.countByShipmentId(shipment.getId())
-    );
+   currentExpected = calculateExpectedDeliveryDate(
+    shipment.getOriginLat(),    shipment.getOriginLng(),
+    shipment.getDestinationLat(), shipment.getDestinationLng(),
+    shipmentRouteRepository.countByShipmentId(shipment.getId())
+);
     shipment.setExpectedDeliveryDate(currentExpected);
     shipmentRepository.save(shipment);
     log.info("Backfilled expectedDeliveryDate for {} during delay report", trackingId);
