@@ -95,8 +95,9 @@ public class Shipment {
     private Long deliveredByStaffId;    // staff who confirmed delivery
     
  // Add these fields to Shipment.java
-
+    
     @Column(name = "expected_delivery_date")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Kolkata")
     private LocalDateTime expectedDeliveryDate;     // calculated on creation
 
     @Column(name = "revised_delivery_date")
