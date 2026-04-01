@@ -97,11 +97,9 @@ public class Shipment {
  // Add these fields to Shipment.java
     
     @Column(name = "expected_delivery_date")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Kolkata")
     private LocalDateTime expectedDeliveryDate;     // calculated on creation
 
     @Column(name = "revised_delivery_date")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Kolkata")
     private LocalDateTime revisedDeliveryDate;      // updated if delay detected
     
     @Builder.Default
