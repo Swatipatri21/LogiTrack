@@ -10,10 +10,65 @@ const STATUSES = [
   'DELIVERED', 'DELIVERY_ATTEMPTED', 'FAILED', 'RETURNED_TO_SENDER'
 ];
 
+// ── India States & Cities data ────────────────────────────────────────────────
+const INDIA_STATES_CITIES = {
+  'Andhra Pradesh': ['Visakhapatnam','Vijayawada','Guntur','Nellore','Kurnool','Rajahmundry','Tirupati','Kakinada','Kadapa','Anantapur','Eluru','Ongole','Vizianagaram','Chittoor','Srikakulam'],
+  'Arunachal Pradesh': ['Itanagar','Naharlagun','Pasighat','Tawang','Ziro','Bomdila','Tezu','Along','Changlang','Khonsa'],
+  'Assam': ['Guwahati','Silchar','Dibrugarh','Jorhat','Nagaon','Tinsukia','Tezpur','Bongaigaon','Dhubri','Diphu','North Lakhimpur','Sivasagar'],
+  'Bihar': ['Patna','Gaya','Muzaffarpur','Bhagalpur','Darbhanga','Arrah','Purnia','Begusarai','Katihar','Munger','Chapra','Samastipur','Hajipur','Supaul','Sitamarhi'],
+  'Chhattisgarh': ['Raipur','Bhilai','Bilaspur','Korba','Durg','Rajnandgaon','Jagdalpur','Ambikapur','Raigarh','Dhamtari'],
+  'Goa': ['Panaji','Margao','Vasco da Gama','Mapusa','Ponda','Bicholim','Valpoi','Sanquelim','Cuncolim'],
+  'Gujarat': ['Ahmedabad','Surat','Vadodara','Rajkot','Bhavnagar','Jamnagar','Junagadh','Gandhinagar','Anand','Nadiad','Morbi','Surendranagar','Bharuch','Mehsana','Patan','Amreli','Navsari','Valsad','Porbandar','Godhra'],
+  'Haryana': ['Faridabad','Gurgaon','Panipat','Ambala','Yamunanagar','Rohtak','Hisar','Karnal','Sonipat','Panchkula','Bhiwani','Sirsa','Bahadurgarh','Rewari','Kaithal'],
+  'Himachal Pradesh': ['Shimla','Manali','Dharamshala','Solan','Mandi','Kullu','Hamirpur','Una','Bilaspur','Chamba','Nahan','Palampur'],
+  'Jharkhand': ['Ranchi','Jamshedpur','Dhanbad','Bokaro','Deoghar','Phusro','Hazaribagh','Giridih','Ramgarh','Medininagar','Chirkunda','Chaibasa'],
+  'Karnataka': ['Bengaluru','Mysuru','Hubli','Mangaluru','Belagavi','Kalaburagi','Davanagere','Ballari','Tumakuru','Shivamogga','Vijayapura','Bidar','Hassan','Udupi','Dharwad','Raichur','Chitradurga','Mandya','Gadag','Bagalkote'],
+  'Kerala': ['Thiruvananthapuram','Kochi','Kozhikode','Thrissur','Kollam','Palakkad','Alappuzha','Malappuram','Kannur','Kottayam','Kasaragod','Idukki','Wayanad','Pathanamthitta','Ernakulam'],
+  'Madhya Pradesh': ['Bhopal','Indore','Jabalpur','Gwalior','Ujjain','Sagar','Dewas','Satna','Ratlam','Rewa','Murwara','Singrauli','Burhanpur','Khandwa','Chhindwara','Bhind','Vidisha','Hoshangabad','Itarsi','Sehore'],
+  'Maharashtra': ['Mumbai','Pune','Nagpur','Nashik','Aurangabad','Solapur','Amravati','Kolhapur','Thane','Navi Mumbai','Pimpri-Chinchwad','Kalyan','Vasai-Virar','Sangli','Malegaon','Jalgaon','Akola','Latur','Dhule','Ahmednagar','Chandrapur','Ichalkaranji','Jalna','Ambernath','Bhiwandi','Nanded','Ulhasnagar','Ratnagiri','Satara','Osmanabad'],
+  'Manipur': ['Imphal','Thoubal','Bishnupur','Churachandpur','Senapati','Ukhrul','Kakching','Moreh'],
+  'Meghalaya': ['Shillong','Tura','Jowai','Nongstoin','Baghmara','Williamnagar'],
+  'Mizoram': ['Aizawl','Lunglei','Champhai','Serchhip','Kolasib','Lawngtlai','Mamit','Saiha'],
+  'Nagaland': ['Kohima','Dimapur','Mokokchung','Tuensang','Wokha','Zunheboto','Phek','Mon'],
+  'Odisha': ['Bhubaneswar','Cuttack','Rourkela','Brahmapur','Sambalpur','Puri','Balasore','Bhadrak','Baripada','Jharsuguda','Bargarh','Balangir','Koraput','Rayagada'],
+  'Punjab': ['Ludhiana','Amritsar','Jalandhar','Patiala','Bathinda','Hoshiarpur','Batala','Pathankot','Moga','Firozpur','Muktsar','Sangrur','Fazilka','Ropar','Mohali','Kapurthala'],
+  'Rajasthan': ['Jaipur','Jodhpur','Kota','Bikaner','Ajmer','Udaipur','Bhilwara','Alwar','Sikar','Bharatpur','Sri Ganganagar','Pali','Barmer','Tonk','Churu','Jhalawar','Kishangarh','Sawai Madhopur','Nagaur','Hanumangarh'],
+  'Sikkim': ['Gangtok','Namchi','Gyalshing','Mangan','Rangpo','Jorethang'],
+  'Tamil Nadu': ['Chennai','Coimbatore','Madurai','Tiruchirappalli','Salem','Tirunelveli','Tiruppur','Vellore','Erode','Thoothukudi','Dindigul','Thanjavur','Ranipet','Sivakasi','Karur','Udhagamandalam','Hosur','Nagercoil','Kanchipuram','Kumaracoil'],
+  'Telangana': ['Hyderabad','Warangal','Nizamabad','Karimnagar','Ramagundam','Khammam','Mahbubnagar','Nalgonda','Adilabad','Suryapet','Miryalaguda','Siddipet','Jagtial','Mancherial'],
+  'Tripura': ['Agartala','Udaipur','Dharmanagar','Sabroom','Kailasahar','Belonia','Khowai','Ambassa'],
+  'Uttar Pradesh': ['Lucknow','Kanpur','Ghaziabad','Agra','Meerut','Varanasi','Prayagraj','Bareilly','Aligarh','Moradabad','Saharanpur','Gorakhpur','Noida','Firozabad','Jhansi','Muzaffarnagar','Mathura','Budaun','Rampur','Shahjahanpur','Hapur','Etawah','Sambhal','Ayodhya','Amroha','Hardoi','Fatehpur','Raebareli','Orai','Bahraich','Bijnor'],
+  'Uttarakhand': ['Dehradun','Haridwar','Roorkee','Haldwani','Rishikesh','Rudrapur','Kashipur','Pantnagar','Nainital','Mussoorie','Tehri','Pithoragarh','Almora'],
+  'West Bengal': ['Kolkata','Asansol','Siliguri','Durgapur','Bardhaman','Malda','Barasat','Habra','Kharagpur','Shantipur','Dankuni','Dhulian','Ranaghat','Uluberia','Haldia','Darjeeling','Cooch Behar','Purulia','Balurghat','Midnapore'],
+  'Andaman and Nicobar Islands': ['Port Blair','Diglipur','Rangat','Mayabunder','Car Nicobar'],
+  'Chandigarh': ['Chandigarh'],
+  'Dadra and Nagar Haveli and Daman and Diu': ['Daman','Diu','Silvassa'],
+  'Delhi': ['New Delhi','Delhi','Dwarka','Rohini','Janakpuri','Pitampura','Laxmi Nagar','Shahdara','Saket','Vasant Kunj','Karol Bagh','Connaught Place','Mayur Vihar','Preet Vihar'],
+  'Jammu and Kashmir': ['Srinagar','Jammu','Anantnag','Sopore','Baramulla','Kathua','Punch','Rajouri','Udhampur','Kulgam'],
+  'Ladakh': ['Leh','Kargil'],
+  'Lakshadweep': ['Kavaratti','Agatti','Minicoy'],
+  'Puducherry': ['Puducherry','Karaikal','Mahe','Yanam'],
+};
+
+const STATE_OPTIONS = [
+  { value: '', label: '— Select State —' },
+  ...Object.keys(INDIA_STATES_CITIES).sort().map(s => ({ value: s, label: s }))
+];
+
+function getCityOptions(state) {
+  if (!state || !INDIA_STATES_CITIES[state]) return [{ value: '', label: '— Select City —' }];
+  return [
+    { value: '', label: '— Select City —' },
+    ...INDIA_STATES_CITIES[state].sort().map(c => ({ value: c, label: c }))
+  ];
+}
+
 const EMPTY_FORM = {
   senderName: '', senderPhone: '', senderEmail: '', senderAddress: '',
+  senderCity: '', senderState: '',
   receiverName: '', receiverPhone: '', receiverEmail: '', receiverAddress: '',
-  origin: '', destination: '', weight: '', description: '',
+  receiverCity: '', receiverState: '',
+  weight: '', description: '',
 };
 
 const PAGE_SIZE_OPTIONS = [10, 20, 50];
@@ -68,32 +123,35 @@ function StyledInput({ error, touched, ...props }) {
   );
 }
 
-function StyledSelect({ error, touched, options = [], ...props }) {
+function StyledDropdown({ error, touched, options = [], value, onChange, onBlur, disabled }) {
   const showError = touched && error;
   return (
     <select
-      {...props}
+      value={value}
+      onChange={onChange}
+      onBlur={onBlur}
+      disabled={disabled}
       style={{
         width: '100%',
         padding: '9px 12px',
         borderRadius: 8,
         border: `1.5px solid ${showError ? '#fca5a5' : '#cbd5e1'}`,
-        background: showError ? '#fff7f7' : '#fff',
+        background: disabled ? '#f1f5f9' : showError ? '#fff7f7' : '#fff',
         fontSize: 13,
-        color: props.value ? '#1e293b' : '#94a3b8',
+        color: value ? '#1e293b' : '#94a3b8',
         outline: 'none',
         boxSizing: 'border-box',
         fontFamily: 'inherit',
-        cursor: 'pointer',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        appearance: 'auto',
+        transition: 'border-color 0.15s',
       }}
-      onFocus={e => e.target.style.borderColor = showError ? '#ef4444' : '#6366f1'}
-      onBlur={e => {
-        e.target.style.borderColor = showError ? '#fca5a5' : '#cbd5e1';
-        props.onBlur?.(e);
-      }}
+      onFocus={e => { if (!disabled) e.target.style.borderColor = showError ? '#ef4444' : '#6366f1'; }}
     >
       {options.map(o => (
-        <option key={o.value} value={o.value}>{o.label}</option>
+        <option key={o.value} value={o.value} disabled={o.value === '' && false}>
+          {o.label}
+        </option>
       ))}
     </select>
   );
@@ -101,12 +159,11 @@ function StyledSelect({ error, touched, options = [], ...props }) {
 
 // ── Validation progress bar ───────────────────────────────────────────────────
 function ValidationProgress({ form, errors }) {
-  const total = Object.keys(EMPTY_FORM).filter(k => k !== 'description').length;
-  const filled = Object.keys(EMPTY_FORM)
-    .filter(k => k !== 'description')
-    .filter(k => form[k] && form[k].toString().trim() !== '').length;
-  const valid = filled - Object.keys(errors).filter(k => k !== 'description').length;
-  const pct = Math.round((valid / total) * 100);
+  const countableFields = Object.keys(EMPTY_FORM).filter(k => k !== 'description');
+  const total  = countableFields.length;
+  const filled = countableFields.filter(k => form[k] && form[k].toString().trim() !== '').length;
+  const valid  = filled - Object.keys(errors).filter(k => k !== 'description').length;
+  const pct    = Math.round((Math.max(0, valid) / total) * 100);
 
   const color = pct < 40 ? '#ef4444' : pct < 80 ? '#f59e0b' : '#10b981';
   const label = pct < 40 ? 'Just started' : pct < 80 ? 'Almost there' : pct === 100 ? 'Ready to submit!' : 'Looking good';
@@ -130,11 +187,7 @@ function ValidationProgress({ form, errors }) {
 // ── Section box wrapper ───────────────────────────────────────────────────────
 function SectionBox({ title, subtitle, color, icon, children }) {
   return (
-    <div style={{
-      borderRadius: 12,
-      border: `1.5px solid ${color}33`,
-      overflow: 'hidden',
-    }}>
+    <div style={{ borderRadius: 12, border: `1.5px solid ${color}33`, overflow: 'hidden' }}>
       <div style={{
         padding: '10px 16px',
         background: `${color}11`,
@@ -162,10 +215,18 @@ function ErrorSummary({ errors, touched }) {
   if (activeErrors.length === 0) return null;
 
   const labels = {
-    senderName: 'Sender name', senderPhone: 'Sender phone', senderEmail: 'Sender email',
-    senderAddress: 'Pickup address', origin: 'Origin hub',
-    receiverName: 'Receiver name', receiverPhone: 'Receiver phone', receiverEmail: 'Receiver email',
-    receiverAddress: 'Delivery address', destination: 'Destination hub',
+    senderName:    'Sender name',
+    senderPhone:   'Sender phone',
+    senderEmail:   'Sender email',
+    senderAddress: 'Pickup address',
+    senderCity:    'Pickup city',
+    senderState:   'Pickup state',
+    receiverName:    'Receiver name',
+    receiverPhone:   'Receiver phone',
+    receiverEmail:   'Receiver email',
+    receiverAddress: 'Delivery address',
+    receiverCity:    'Delivery city',
+    receiverState:   'Delivery state',
     weight: 'Package weight',
   };
 
@@ -196,7 +257,6 @@ function Pagination({ page, totalPages, pageSize, totalItems, onPageChange, onPa
   const startItem = totalItems === 0 ? 0 : (page - 1) * pageSize + 1;
   const endItem   = Math.min(page * pageSize, totalItems);
 
-  // Build visible page numbers: always show first, last, current ±1, with ellipsis
   const getPages = () => {
     if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1);
     const pages = new Set([1, totalPages, page, page - 1, page + 1].filter(p => p >= 1 && p <= totalPages));
@@ -221,15 +281,10 @@ function Pagination({ page, totalPages, pageSize, totalItems, onPageChange, onPa
   return (
     <div style={{
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      padding: '14px 20px',
-      borderTop: '1px solid #e2e8f0',
-      background: '#f8fafc',
-      borderBottomLeftRadius: 12,
-      borderBottomRightRadius: 12,
-      flexWrap: 'wrap',
-      gap: 12,
+      padding: '14px 20px', borderTop: '1px solid #e2e8f0',
+      background: '#f8fafc', borderBottomLeftRadius: 12, borderBottomRightRadius: 12,
+      flexWrap: 'wrap', gap: 12,
     }}>
-      {/* Left: count info + page size */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
         <span style={{ fontSize: 13, color: '#64748b' }}>
           {totalItems === 0
@@ -248,38 +303,22 @@ function Pagination({ page, totalPages, pageSize, totalItems, onPageChange, onPa
               cursor: 'pointer', outline: 'none', fontFamily: 'inherit',
             }}
           >
-            {PAGE_SIZE_OPTIONS.map(n => (
-              <option key={n} value={n}>{n}</option>
-            ))}
+            {PAGE_SIZE_OPTIONS.map(n => <option key={n} value={n}>{n}</option>)}
           </select>
         </div>
       </div>
-
-      {/* Right: page buttons */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-        {/* Prev */}
         <button
-          onClick={() => onPageChange(page - 1)}
-          disabled={page <= 1}
-          style={{
-            ...btnBase,
-            opacity: page <= 1 ? 0.4 : 1,
-            cursor: page <= 1 ? 'not-allowed' : 'pointer',
-          }}
-          onMouseEnter={e => { if (page > 1) { e.target.style.background = '#f1f5f9'; e.target.style.borderColor = '#6366f1'; e.target.style.color = '#6366f1'; }}}
-          onMouseLeave={e => { e.target.style.background = '#fff'; e.target.style.borderColor = '#e2e8f0'; e.target.style.color = '#475569'; }}
-          title="Previous page"
-        >
-          ‹
-        </button>
-
+          onClick={() => onPageChange(page - 1)} disabled={page <= 1}
+          style={{ ...btnBase, opacity: page <= 1 ? 0.4 : 1, cursor: page <= 1 ? 'not-allowed' : 'pointer' }}
+          onMouseEnter={e => { if (page > 1) { e.target.style.background='#f1f5f9'; e.target.style.borderColor='#6366f1'; e.target.style.color='#6366f1'; }}}
+          onMouseLeave={e => { e.target.style.background='#fff'; e.target.style.borderColor='#e2e8f0'; e.target.style.color='#475569'; }}
+        >‹</button>
         {getPages().map((p, i) =>
           p === '…'
-            ? <span key={`ellipsis-${i}`} style={{ padding: '0 4px', color: '#94a3b8', fontSize: 13, userSelect: 'none' }}>…</span>
+            ? <span key={`e-${i}`} style={{ padding: '0 4px', color: '#94a3b8', fontSize: 13 }}>…</span>
             : (
-              <button
-                key={p}
-                onClick={() => onPageChange(p)}
+              <button key={p} onClick={() => onPageChange(p)}
                 style={{
                   ...btnBase,
                   background: p === page ? '#6366f1' : '#fff',
@@ -288,30 +327,67 @@ function Pagination({ page, totalPages, pageSize, totalItems, onPageChange, onPa
                   cursor: p === page ? 'default' : 'pointer',
                   boxShadow: p === page ? '0 2px 8px #6366f140' : 'none',
                 }}
-                onMouseEnter={e => { if (p !== page) { e.target.style.background = '#f1f5f9'; e.target.style.borderColor = '#6366f1'; e.target.style.color = '#6366f1'; }}}
-                onMouseLeave={e => { if (p !== page) { e.target.style.background = '#fff'; e.target.style.borderColor = '#e2e8f0'; e.target.style.color = '#475569'; }}}
-              >
-                {p}
-              </button>
+                onMouseEnter={e => { if (p !== page) { e.target.style.background='#f1f5f9'; e.target.style.borderColor='#6366f1'; e.target.style.color='#6366f1'; }}}
+                onMouseLeave={e => { if (p !== page) { e.target.style.background='#fff'; e.target.style.borderColor='#e2e8f0'; e.target.style.color='#475569'; }}}
+              >{p}</button>
             )
         )}
-
-        {/* Next */}
         <button
-          onClick={() => onPageChange(page + 1)}
-          disabled={page >= totalPages}
-          style={{
-            ...btnBase,
-            opacity: page >= totalPages ? 0.4 : 1,
-            cursor: page >= totalPages ? 'not-allowed' : 'pointer',
-          }}
-          onMouseEnter={e => { if (page < totalPages) { e.target.style.background = '#f1f5f9'; e.target.style.borderColor = '#6366f1'; e.target.style.color = '#6366f1'; }}}
-          onMouseLeave={e => { e.target.style.background = '#fff'; e.target.style.borderColor = '#e2e8f0'; e.target.style.color = '#475569'; }}
-          title="Next page"
-        >
-          ›
-        </button>
+          onClick={() => onPageChange(page + 1)} disabled={page >= totalPages}
+          style={{ ...btnBase, opacity: page >= totalPages ? 0.4 : 1, cursor: page >= totalPages ? 'not-allowed' : 'pointer' }}
+          onMouseEnter={e => { if (page < totalPages) { e.target.style.background='#f1f5f9'; e.target.style.borderColor='#6366f1'; e.target.style.color='#6366f1'; }}}
+          onMouseLeave={e => { e.target.style.background='#fff'; e.target.style.borderColor='#e2e8f0'; e.target.style.color='#475569'; }}
+        >›</button>
       </div>
+    </div>
+  );
+}
+
+// ── Cascading State + City picker ─────────────────────────────────────────────
+function StateCityPicker({ stateValue, cityValue, onStateChange, onCityChange, onStateBlur, onCityBlur,
+  stateError, cityError, stateTouched, cityTouched, accentColor }) {
+
+  const cityOptions = getCityOptions(stateValue);
+  const cityDisabled = !stateValue;
+
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+      <FieldGroup label="State" required error={stateError} touched={stateTouched}>
+        <StyledDropdown
+          value={stateValue}
+          options={STATE_OPTIONS}
+          onChange={onStateChange}
+          onBlur={onStateBlur}
+          error={stateError}
+          touched={stateTouched}
+        />
+      </FieldGroup>
+      <FieldGroup
+        label="City"
+        required
+        error={cityError}
+        touched={cityTouched}
+      >
+        <div style={{ position: 'relative' }}>
+          <StyledDropdown
+            value={cityValue}
+            options={cityOptions}
+            onChange={onCityChange}
+            onBlur={onCityBlur}
+            error={cityError}
+            touched={cityTouched}
+            disabled={cityDisabled}
+          />
+          {cityDisabled && (
+            <div style={{
+              position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)',
+              fontSize: 10, color: '#94a3b8', pointerEvents: 'none', whiteSpace: 'nowrap',
+            }}>
+              Pick state first
+            </div>
+          )}
+        </div>
+      </FieldGroup>
     </div>
   );
 }
@@ -325,46 +401,35 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
   const [touched, setTouched]           = useState({});
   const [formAlert, setFormAlert]       = useState(null);
   const [creating, setCreating]         = useState(false);
-  const [hubs, setHubs]                 = useState([]);
 
-  // Pagination state
-  const [page, setPage]           = useState(1);
-  const [pageSize, setPageSize]   = useState(5);
+  const [page, setPage]         = useState(1);
+  const [pageSize, setPageSize] = useState(5);
 
-  // Delete state
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting]         = useState(false);
   const [deleteAlert, setDeleteAlert]   = useState(null);
 
-  useEffect(() => {
-    hubAPI.getAll()
-      .then(r => setHubs(r.data?.data || r.data || []))
-      .catch(err => console.error('Failed to load hubs', err));
-  }, []);
-
-  // Reset to page 1 when filter/search/pageSize changes
   useEffect(() => { setPage(1); }, [search, statusFilter, pageSize]);
 
   // ── Filtering ─────────────────────────────────────────────────────────────
- const filtered = useMemo(() => shipments
-  .filter(s => {
-    const q = search.toLowerCase();
-    return (
-      (!q ||
-        (s.trackingId   || '').toLowerCase().includes(q) ||
-        (s.senderName   || '').toLowerCase().includes(q) ||
-        (s.receiverName || '').toLowerCase().includes(q)
-      ) &&
-      (!statusFilter || s.currentStatus === statusFilter)
-    );
-  })
-  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
-[shipments, search, statusFilter]);
+  const filtered = useMemo(() => shipments
+    .filter(s => {
+      const q = search.toLowerCase();
+      return (
+        (!q ||
+          (s.trackingId   || '').toLowerCase().includes(q) ||
+          (s.senderName   || '').toLowerCase().includes(q) ||
+          (s.receiverName || '').toLowerCase().includes(q)
+        ) &&
+        (!statusFilter || s.currentStatus === statusFilter)
+      );
+    })
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+  [shipments, search, statusFilter]);
 
-  // ── Pagination slice ──────────────────────────────────────────────────────
-  const totalPages  = Math.max(1, Math.ceil(filtered.length / pageSize));
-  const safePage    = Math.min(page, totalPages);
-  const paginated   = filtered.slice((safePage - 1) * pageSize, safePage * pageSize);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const safePage   = Math.min(page, totalPages);
+  const paginated  = filtered.slice((safePage - 1) * pageSize, safePage * pageSize);
 
   // ── Validation ────────────────────────────────────────────────────────────
   const errors = useMemo(() => {
@@ -373,8 +438,11 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
     const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const required = [
-      'senderName', 'senderPhone', 'senderEmail', 'senderAddress', 'origin',
-      'receiverName', 'receiverPhone', 'receiverEmail', 'receiverAddress', 'destination', 'weight',
+      'senderName', 'senderPhone', 'senderEmail', 'senderAddress',
+      'senderState', 'senderCity',
+      'receiverName', 'receiverPhone', 'receiverEmail', 'receiverAddress',
+      'receiverState', 'receiverCity',
+      'weight',
     ];
     required.forEach(f => {
       if (!form[f] || !form[f].toString().trim()) e[f] = 'This field is required';
@@ -385,38 +453,46 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
     if (form.senderEmail   && !emailRx.test(form.senderEmail))   e.senderEmail   = 'Enter a valid email like name@example.com';
     if (form.receiverEmail && !emailRx.test(form.receiverEmail)) e.receiverEmail = 'Enter a valid email like name@example.com';
     if (form.weight !== '' && parseFloat(form.weight) <= 0)      e.weight        = 'Weight must be greater than 0 kg';
-    if (form.origin && form.destination && form.origin === form.destination)
-      e.destination = 'Destination must be different from origin';
+
+    // Cross-field: same pickup and delivery location
+    if (
+      form.senderCity && form.senderState &&
+      form.receiverCity && form.receiverState &&
+      form.senderCity.trim().toLowerCase() === form.receiverCity.trim().toLowerCase() &&
+      form.senderState.trim().toLowerCase() === form.receiverState.trim().toLowerCase()
+    ) {
+      e.receiverCity = 'Delivery location must differ from pickup location';
+    }
 
     return e;
   }, [form]);
-
- const hubOptions = useMemo(() => [
-  { value: '', label: '— Select a hub city —' },
-  ...hubs
-    .slice()
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .map(h => ({ value: h.city, label: `${h.name} (${h.city})` })),
-], [hubs]);
 
   const statusOptions = useMemo(() => [
     { value: '', label: 'All Statuses' },
     ...STATUSES.map(s => ({ value: s, label: s.replace(/_/g, ' ') })),
   ], []);
 
-  // ── Handlers ─────────────────────────────────────────────────────────────
   const handleChange = field => e => {
     setForm(prev => ({ ...prev, [field]: e.target.value }));
     if (formAlert) setFormAlert(null);
   };
+
+  // When state changes, reset city
+  const handleStateChange = prefix => e => {
+    const state = e.target.value;
+    setForm(prev => ({ ...prev, [`${prefix}State`]: state, [`${prefix}City`]: '' }));
+    if (formAlert) setFormAlert(null);
+  };
+
   const handleBlur = field => () => setTouched(prev => ({ ...prev, [field]: true }));
 
   const handleClose = () => {
-    setShowCreate(false); setForm(EMPTY_FORM);
-    setTouched({}); setFormAlert(null);
+    setShowCreate(false);
+    setForm(EMPTY_FORM);
+    setTouched({});
+    setFormAlert(null);
   };
 
-  // ── Create ────────────────────────────────────────────────────────────────
   const createShipment = async () => {
     setTouched(Object.fromEntries(Object.keys(EMPTY_FORM).map(k => [k, true])));
     if (Object.keys(errors).length > 0) {
@@ -428,6 +504,9 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
     setFormAlert(null);
 
     try {
+      const originStr      = `${form.senderCity.trim()}, ${form.senderState.trim()}`;
+      const destinationStr = `${form.receiverCity.trim()}, ${form.receiverState.trim()}`;
+
       const payload = {
         senderName:      form.senderName.trim(),
         senderPhone:     form.senderPhone.trim(),
@@ -437,11 +516,13 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
         receiverPhone:   form.receiverPhone.trim(),
         receiverEmail:   form.receiverEmail.trim(),
         receiverAddress: form.receiverAddress.trim(),
-        origin:          form.origin,
-        destination:     form.destination,
-        weight:          parseFloat(form.weight),
-        description:     form.description.trim() || '',
+        origin:      originStr,
+        destination: destinationStr,
+        weight:      parseFloat(form.weight),
+        description: form.description.trim() || '',
       };
+
+      console.log('📦 Sending to backend:', JSON.stringify(payload, null, 2));
 
       const res     = await shipmentAPI.create(payload);
       const body    = res.data;
@@ -470,7 +551,6 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
     }
   };
 
-  // ── Delete ────────────────────────────────────────────────────────────────
   const confirmDelete = async () => {
     if (!deleteTarget) return;
     setDeleting(true);
@@ -488,7 +568,6 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
 
   const isFormInvalid = Object.keys(errors).length > 0;
 
-  // ── Stats ─────────────────────────────────────────────────────────────────
   const stats = useMemo(() => ({
     total:     shipments.length,
     active:    shipments.filter(s => !['DELIVERED','FAILED','RETURNED_TO_SENDER'].includes(s.currentStatus)).length,
@@ -496,7 +575,6 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
     failed:    shipments.filter(s => ['FAILED','RETURNED_TO_SENDER'].includes(s.currentStatus)).length,
   }), [shipments]);
 
-  // ── Render ────────────────────────────────────────────────────────────────
   return (
     <div style={{ color: '#1e293b' }}>
       <SectionHeader
@@ -511,33 +589,25 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
         }
       />
 
-      {/* ── Stats bar ────────────────────────────────────────────────────── */}
+      {/* Stats bar */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14, marginBottom: 22 }}>
         {[
-          { label: 'Total Shipments', value: stats.total,     color: '#6366f1', bg: '#eef2ff', icon: '📦',  trend: null },
-          { label: 'Active',          value: stats.active,    color: '#0284c7', bg: '#e0f2fe',  icon: '🚚', trend: null },
-          { label: 'Delivered',       value: stats.delivered, color: '#16a34a', bg: '#dcfce7',  icon: '✅', trend: null },
-          { label: 'Failed / RTS',    value: stats.failed,    color: '#dc2626', bg: '#fee2e2',   icon: '❌',trend: null },
+          { label: 'Total Shipments', value: stats.total,     color: '#6366f1', bg: '#eef2ff', icon: '📦' },
+          { label: 'Active',          value: stats.active,    color: '#0284c7', bg: '#e0f2fe', icon: '🚚' },
+          { label: 'Delivered',       value: stats.delivered, color: '#16a34a', bg: '#dcfce7', icon: '✅' },
+          { label: 'Failed / RTS',    value: stats.failed,    color: '#dc2626', bg: '#fee2e2', icon: '❌' },
         ].map(({ label, value, color, bg, icon }) => (
           <div key={label} style={{
-            background: '#fff',
-            borderRadius: 12,
-            border: `1px solid #e2e8f0`,
-            padding: '16px 20px',
-            borderLeft: `4px solid ${color}`,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 14,
+            background: '#fff', borderRadius: 12, border: '1px solid #e2e8f0',
+            padding: '16px 20px', borderLeft: `4px solid ${color}`,
+            display: 'flex', alignItems: 'center', gap: 14,
             boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
           }}>
             <div style={{
-              width: 44, height: 44, borderRadius: 10,
-              background: bg,
+              width: 44, height: 44, borderRadius: 10, background: bg,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: 20, flexShrink: 0,
-            }}>
-              {icon}
-            </div>
+            }}>{icon}</div>
             <div>
               <div style={{ fontSize: 24, fontWeight: 800, color, letterSpacing: '-1px', lineHeight: 1 }}>{value}</div>
               <div style={{ fontSize: 11, color: '#64748b', fontWeight: 600, marginTop: 3, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{label}</div>
@@ -546,45 +616,36 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
         ))}
       </div>
 
-      {/* ── Table card ───────────────────────────────────────────────────── */}
+      {/* Table card */}
       <div style={{
-        background: '#fff', borderRadius: 12,
-        border: '1px solid #e2e8f0',
-        boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
-        overflow: 'hidden',
+        background: '#fff', borderRadius: 12, border: '1px solid #e2e8f0',
+        boxShadow: '0 1px 4px rgba(0,0,0,0.05)', overflow: 'hidden',
       }}>
         {/* Toolbar */}
         <div style={{
           padding: '14px 18px', borderBottom: '1px solid #e2e8f0',
-          display: 'flex', gap: 10, background: '#f8fafc', alignItems: 'center',
-          flexWrap: 'wrap',
+          display: 'flex', gap: 10, background: '#f8fafc', alignItems: 'center', flexWrap: 'wrap',
         }}>
-          {/* Search */}
           <div style={{ position: 'relative', flex: '1 1 260px', minWidth: 200 }}>
             <span style={{
               position: 'absolute', left: 11, top: '50%', transform: 'translateY(-50%)',
               color: '#94a3b8', fontSize: 14, pointerEvents: 'none',
             }}>🔍</span>
             <input
-              value={search}
-              onChange={e => setSearch(e.target.value)}
+              value={search} onChange={e => setSearch(e.target.value)}
               placeholder="Search by tracking ID, sender or receiver…"
               style={{
                 width: '100%', padding: '8px 12px 8px 34px', boxSizing: 'border-box',
                 border: '1.5px solid #e2e8f0', borderRadius: 8,
                 fontSize: 13, outline: 'none', background: '#fff',
-                color: '#1e293b', fontFamily: 'inherit',
-                transition: 'border-color 0.15s',
+                color: '#1e293b', fontFamily: 'inherit', transition: 'border-color 0.15s',
               }}
               onFocus={e => e.target.style.borderColor = '#6366f1'}
               onBlur={e => e.target.style.borderColor = '#e2e8f0'}
             />
           </div>
-
-          {/* Status filter */}
           <select
-            value={statusFilter}
-            onChange={e => setStatusFilter(e.target.value)}
+            value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
             style={{
               padding: '8px 12px', border: '1.5px solid #e2e8f0', borderRadius: 8,
               fontSize: 13, color: statusFilter ? '#1e293b' : '#94a3b8',
@@ -592,41 +653,26 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
               fontFamily: 'inherit', minWidth: 160,
             }}
           >
-            {statusOptions.map(o => (
-              <option key={o.value} value={o.value}>{o.label}</option>
-            ))}
+            {statusOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
-
-          {/* Active filter pill */}
           {(search || statusFilter) && (
             <button
               onClick={() => { setSearch(''); setStatusFilter(''); }}
               style={{
-                padding: '6px 12px', borderRadius: 20,
-                border: '1.5px solid #fca5a5', background: '#fef2f2',
-                color: '#dc2626', fontSize: 12, fontWeight: 700,
+                padding: '6px 12px', borderRadius: 20, border: '1.5px solid #fca5a5',
+                background: '#fef2f2', color: '#dc2626', fontSize: 12, fontWeight: 700,
                 cursor: 'pointer', whiteSpace: 'nowrap', fontFamily: 'inherit',
               }}
-            >
-              ✕ Clear filters
-            </button>
+            >✕ Clear filters</button>
           )}
-
-          <span style={{
-            marginLeft: 'auto', fontSize: 12, color: '#94a3b8',
-            whiteSpace: 'nowrap', fontWeight: 600,
-          }}>
+          <span style={{ marginLeft: 'auto', fontSize: 12, color: '#94a3b8', whiteSpace: 'nowrap', fontWeight: 600 }}>
             {filtered.length} result{filtered.length !== 1 ? 's' : ''}
           </span>
         </div>
 
-        {/* Table */}
         <Table
           columns={[
-            {
-              label: 'Tracking ID',
-              render: s => <TrackingBadge id={s.trackingId} />,
-            },
+            { label: 'Tracking ID', render: s => <TrackingBadge id={s.trackingId} /> },
             {
               label: 'Sender',
               render: s => (
@@ -649,15 +695,9 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
               label: 'Route',
               render: s => (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12 }}>
-                  <span style={{
-                    background: '#eef2ff', color: '#6366f1',
-                    padding: '3px 8px', borderRadius: 6, fontWeight: 700,
-                  }}>{s.origin}</span>
+                  <span style={{ background: '#eef2ff', color: '#6366f1', padding: '3px 8px', borderRadius: 6, fontWeight: 700 }}>{s.origin}</span>
                   <span style={{ color: '#cbd5e1', fontSize: 16 }}>→</span>
-                  <span style={{
-                    background: '#e0f2fe', color: '#0284c7',
-                    padding: '3px 8px', borderRadius: 6, fontWeight: 700,
-                  }}>{s.destination}</span>
+                  <span style={{ background: '#e0f2fe', color: '#0284c7', padding: '3px 8px', borderRadius: 6, fontWeight: 700 }}>{s.destination}</span>
                 </div>
               ),
             },
@@ -667,40 +707,29 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
                 <span style={{
                   background: '#f8fafc', border: '1px solid #e2e8f0',
                   borderRadius: 6, padding: '3px 9px',
-                  fontSize: 12, fontWeight: 700, color: '#475569',
-                  whiteSpace: 'nowrap',
+                  fontSize: 12, fontWeight: 700, color: '#475569', whiteSpace: 'nowrap',
                 }}>
                   {s.weight != null ? `${s.weight} kg` : '—'}
                 </span>
               ),
             },
-            {
-              label: 'Status',
-              render: s => <StatusBadge status={s.currentStatus} />,
-            },
+            { label: 'Status', render: s => <StatusBadge status={s.currentStatus} /> },
             {
               label: 'Actions',
               render: s => (
                 <div style={{ display: 'flex', gap: 6 }}>
-                  <Button variant="ghost" size="sm" onClick={() => onViewShipment(s)}>
-                    Details
-                  </Button>
+                  <Button variant="ghost" size="sm" onClick={() => onViewShipment(s)}>Details</Button>
                   {role === 'ADMIN' && (
                     <button
                       onClick={() => { setDeleteTarget(s); setDeleteAlert(null); }}
-                      title="Delete shipment"
                       style={{
-                        padding: '4px 10px', borderRadius: 6,
-                        border: '1px solid #fca5a5',
-                        background: '#fff7f7', color: '#dc2626',
-                        fontSize: 12, cursor: 'pointer', fontWeight: 600,
-                        fontFamily: 'inherit', transition: 'background 0.15s',
+                        padding: '4px 10px', borderRadius: 6, border: '1px solid #fca5a5',
+                        background: '#fff7f7', color: '#dc2626', fontSize: 12,
+                        cursor: 'pointer', fontWeight: 600, fontFamily: 'inherit',
                       }}
                       onMouseEnter={e => e.target.style.background = '#fee2e2'}
                       onMouseLeave={e => e.target.style.background = '#fff7f7'}
-                    >
-                      Delete
-                    </button>
+                    >Delete</button>
                   )}
                 </div>
               ),
@@ -709,102 +738,62 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
           rows={paginated}
         />
 
-        {/* Empty state */}
         {paginated.length === 0 && (
           <div style={{ textAlign: 'center', padding: '56px 20px', color: '#94a3b8' }}>
-            <div style={{ fontSize: 40, marginBottom: 12 }}></div>
+            <div style={{ fontSize: 40, marginBottom: 12 }}>📭</div>
             <div style={{ fontWeight: 700, fontSize: 15, color: '#64748b' }}>No shipments found</div>
             <div style={{ fontSize: 13, marginTop: 6 }}>
               {search || statusFilter ? 'Try adjusting your search or clearing the filters.' : 'No shipments have been created yet.'}
             </div>
-            {(search || statusFilter) && (
-              <button
-                onClick={() => { setSearch(''); setStatusFilter(''); }}
-                style={{
-                  marginTop: 16, padding: '8px 18px', borderRadius: 8,
-                  border: '1.5px solid #e2e8f0', background: '#fff',
-                  color: '#6366f1', fontSize: 13, fontWeight: 700,
-                  cursor: 'pointer', fontFamily: 'inherit',
-                }}
-              >
-                Clear filters
-              </button>
-            )}
           </div>
         )}
 
-        {/* Pagination */}
         {filtered.length > 0 && (
           <Pagination
-            page={safePage}
-            totalPages={totalPages}
-            pageSize={pageSize}
-            totalItems={filtered.length}
-            onPageChange={setPage}
-            onPageSizeChange={n => { setPageSize(n); setPage(1); }}
+            page={safePage} totalPages={totalPages} pageSize={pageSize} totalItems={filtered.length}
+            onPageChange={setPage} onPageSizeChange={n => { setPageSize(n); setPage(1); }}
           />
         )}
       </div>
 
-      {/* ── Delete Confirmation Modal ─────────────────────────────────────── */}
+      {/* Delete Modal */}
       <Modal
-        open={!!deleteTarget}
-        onClose={() => setDeleteTarget(null)}
-        title="Delete Shipment"
-        width={440}
+        open={!!deleteTarget} onClose={() => setDeleteTarget(null)}
+        title="Delete Shipment" width={440}
         footer={
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, width: '100%' }}>
             <Button variant="ghost" onClick={() => setDeleteTarget(null)}>Cancel</Button>
             <button
-              onClick={confirmDelete}
-              disabled={deleting}
+              onClick={confirmDelete} disabled={deleting}
               style={{
                 padding: '8px 20px', borderRadius: 8, border: 'none',
                 background: deleting ? '#fca5a5' : '#dc2626', color: '#fff',
                 fontSize: 13, fontWeight: 700,
-                cursor: deleting ? 'not-allowed' : 'pointer',
-                fontFamily: 'inherit',
+                cursor: deleting ? 'not-allowed' : 'pointer', fontFamily: 'inherit',
               }}
-            >
-              {deleting ? 'Deleting…' : 'Yes, Delete'}
-            </button>
+            >{deleting ? 'Deleting…' : 'Yes, Delete'}</button>
           </div>
         }
       >
         {deleteAlert && <Alert message={deleteAlert.msg} type={deleteAlert.type} />}
         <div style={{ textAlign: 'center', padding: '8px 0 16px' }}>
           <div style={{ fontSize: 40, marginBottom: 12 }}>🗑️</div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: '#1e293b', marginBottom: 8 }}>
-            Are you sure?
-          </div>
-          <div style={{ fontSize: 13, color: '#64748b', marginBottom: 16 }}>
-            This will permanently delete shipment
-          </div>
+          <div style={{ fontSize: 15, fontWeight: 700, color: '#1e293b', marginBottom: 8 }}>Are you sure?</div>
+          <div style={{ fontSize: 13, color: '#64748b', marginBottom: 16 }}>This will permanently delete shipment</div>
           {deleteTarget && (
-            <div style={{
-              background: '#fef2f2', border: '1px solid #fca5a5',
-              borderRadius: 8, padding: '10px 16px', display: 'inline-block',
-            }}>
-              <div style={{ fontSize: 13, fontWeight: 800, color: '#dc2626' }}>
-                {deleteTarget.trackingId}
-              </div>
-              <div style={{ fontSize: 12, color: '#64748b', marginTop: 2 }}>
-                {deleteTarget.senderName} → {deleteTarget.receiverName}
-              </div>
+            <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: 8, padding: '10px 16px', display: 'inline-block' }}>
+              <div style={{ fontSize: 13, fontWeight: 800, color: '#dc2626' }}>{deleteTarget.trackingId}</div>
+              <div style={{ fontSize: 12, color: '#64748b', marginTop: 2 }}>{deleteTarget.senderName} → {deleteTarget.receiverName}</div>
             </div>
           )}
-          <div style={{ fontSize: 12, color: '#ef4444', marginTop: 12, fontWeight: 500 }}>
-            ⚠ This action cannot be undone.
-          </div>
+          <div style={{ fontSize: 12, color: '#ef4444', marginTop: 12, fontWeight: 500 }}>⚠ This action cannot be undone.</div>
         </div>
       </Modal>
 
-      {/* ── Create Shipment Modal ─────────────────────────────────────────── */}
+      {/* Create Modal */}
       <Modal
-        open={showCreate}
-        onClose={handleClose}
-        title="Create New Logistics Order"
-        width={900}
+        open={showCreate} onClose={handleClose}
+        title="Create New Logistics Order" width={900}
         footer={
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <span style={{ fontSize: 12, color: isFormInvalid ? '#ef4444' : '#16a34a', fontWeight: 600 }}>
@@ -815,18 +804,14 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
             <div style={{ display: 'flex', gap: 10 }}>
               <Button variant="ghost" onClick={handleClose}>Cancel</Button>
               <button
-                onClick={createShipment}
-                disabled={creating}
+                onClick={createShipment} disabled={creating}
                 style={{
                   padding: '9px 22px', borderRadius: 8, border: 'none',
                   background: creating ? '#a5b4fc' : '#6366f1',
                   color: '#fff', fontSize: 13, fontWeight: 700,
-                  cursor: creating ? 'not-allowed' : 'pointer',
-                  fontFamily: 'inherit',
+                  cursor: creating ? 'not-allowed' : 'pointer', fontFamily: 'inherit',
                 }}
-              >
-                {creating ? 'Creating…' : 'Finalize & Create Order'}
-              </button>
+              >{creating ? 'Creating…' : 'Finalize & Create Order'}</button>
             </div>
           </div>
         }
@@ -871,20 +856,37 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
 
             <FieldGroup label="Pickup address" required error={errors.senderAddress} touched={touched.senderAddress}>
               <StyledInput
-                value={form.senderAddress} placeholder="Street, Area, City"
+                value={form.senderAddress} placeholder="Street, Area / Landmark"
                 onChange={handleChange('senderAddress')} onBlur={handleBlur('senderAddress')}
                 error={errors.senderAddress} touched={touched.senderAddress}
               />
             </FieldGroup>
 
-            <FieldGroup label="Origin hub" required error={errors.origin} touched={touched.origin}>
-              <StyledSelect
-                value={form.origin} options={hubOptions}
-                onChange={handleChange('origin')}
-                onBlur={handleBlur('origin')}
-                error={errors.origin} touched={touched.origin}
-              />
-            </FieldGroup>
+            {/* Cascading State → City */}
+            <StateCityPicker
+              stateValue={form.senderState}
+              cityValue={form.senderCity}
+              onStateChange={handleStateChange('sender')}
+              onCityChange={handleChange('senderCity')}
+              onStateBlur={handleBlur('senderState')}
+              onCityBlur={handleBlur('senderCity')}
+              stateError={errors.senderState}
+              cityError={errors.senderCity}
+              stateTouched={touched.senderState}
+              cityTouched={touched.senderCity}
+              accentColor="#6366f1"
+            />
+
+            {/* Live geocode preview */}
+            {form.senderAddress && form.senderCity && form.senderState && (
+              <div style={{
+                background: '#f0fdf4', border: '1px solid #86efac',
+                borderRadius: 8, padding: '8px 12px',
+                fontSize: 11, color: '#166534',
+              }}>
+                📍 Will geocode: <strong>{form.senderAddress.trim()}, {form.senderCity}, {form.senderState}</strong>
+              </div>
+            )}
           </SectionBox>
 
           {/* RECEIVER */}
@@ -916,20 +918,37 @@ export default function Shipments({ shipments = [], setShipments, role, onViewSh
 
             <FieldGroup label="Delivery address" required error={errors.receiverAddress} touched={touched.receiverAddress}>
               <StyledInput
-                value={form.receiverAddress} placeholder="Street, Area, City"
+                value={form.receiverAddress} placeholder="Street, Area / Landmark"
                 onChange={handleChange('receiverAddress')} onBlur={handleBlur('receiverAddress')}
                 error={errors.receiverAddress} touched={touched.receiverAddress}
               />
             </FieldGroup>
 
-            <FieldGroup label="Destination hub" required error={errors.destination} touched={touched.destination}>
-              <StyledSelect
-                value={form.destination} options={hubOptions}
-                onChange={handleChange('destination')}
-                onBlur={handleBlur('destination')}
-                error={errors.destination} touched={touched.destination}
-              />
-            </FieldGroup>
+            {/* Cascading State → City */}
+            <StateCityPicker
+              stateValue={form.receiverState}
+              cityValue={form.receiverCity}
+              onStateChange={handleStateChange('receiver')}
+              onCityChange={handleChange('receiverCity')}
+              onStateBlur={handleBlur('receiverState')}
+              onCityBlur={handleBlur('receiverCity')}
+              stateError={errors.receiverState}
+              cityError={errors.receiverCity}
+              stateTouched={touched.receiverState}
+              cityTouched={touched.receiverCity}
+              accentColor="#0284c7"
+            />
+
+            {/* Live geocode preview */}
+            {form.receiverAddress && form.receiverCity && form.receiverState && (
+              <div style={{
+                background: '#eff6ff', border: '1px solid #93c5fd',
+                borderRadius: 8, padding: '8px 12px',
+                fontSize: 11, color: '#1e40af',
+              }}>
+                📍 Will geocode: <strong>{form.receiverAddress.trim()}, {form.receiverCity}, {form.receiverState}</strong>
+              </div>
+            )}
           </SectionBox>
         </div>
 
